@@ -12,7 +12,7 @@ public class PacienteDAO {
 
     public String salvarPaciente(PacienteEntity paciente) throws NegocioException {
 
-        String sql = "INSERT INTO clinicsystem.paciente(nome, cpf, sintoma) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO paciente(nome, cpf, sintoma) VALUES (?, ?, ?)";
         PreparedStatement preparedStatement = null;
 
         try {
@@ -120,7 +120,7 @@ public class PacienteDAO {
             }
 
         } catch (SQLException e) {
-            throw new NegocioException("Não foi possível encontrar o usuário");
+            throw new NegocioException("Não foi possível encontrar o paciente");
         } finally {
             if (preparedStatement != null){
                 try {

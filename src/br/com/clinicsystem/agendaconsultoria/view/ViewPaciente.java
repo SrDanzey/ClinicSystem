@@ -7,7 +7,7 @@ import br.com.clinicsystem.agendaconsultoria.core.validacao.exception.NegocioExc
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class View {
+public class ViewPaciente {
 
     public static void main(String[] args) throws SQLException, NegocioException {
         PacienteEntity pacienteEnty = new PacienteEntity();
