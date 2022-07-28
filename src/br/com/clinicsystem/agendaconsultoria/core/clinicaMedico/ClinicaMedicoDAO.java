@@ -37,7 +37,7 @@ public class ClinicaMedicoDAO
     }
 
 
-    public ArrayList<ClinicaMedicoEntity> listarMedicoClinica() throws NegocioException {
+    public ArrayList<ClinicaMedicoEntity> listarClinicaMedico() throws NegocioException {
 
         String sql = "SELECT id, fk_idMedico, fk_idClinica FROM clinicaMedico";
         PreparedStatement preparedStatement = null;
@@ -75,14 +75,14 @@ public class ClinicaMedicoDAO
     }
 
 
-    public void deletarClinicaMedico(Long idMedicoClinica) throws NegocioException {
+    public void deletarClinicaMedico(Long idClinicaMedico) throws NegocioException {
 
         String sql = "DELETE FROM clinicaMedico WHERE id = ?";
         PreparedStatement preparedStatement = null;
 
         try {
             preparedStatement = ConexaoMySQL.getConnection().prepareStatement(sql);
-            preparedStatement.setLong(1, idMedicoClinica);
+            preparedStatement.setLong(1, idClinicaMedico);
             preparedStatement.execute();
 
         } catch (SQLException e) {
@@ -99,7 +99,7 @@ public class ClinicaMedicoDAO
     }
 
 
-    public ClinicaMedicoEntity buscarClinicaMedico(Long idMedicoClinica){
+    public ClinicaMedicoEntity buscarClinicaMedico(Long idMedicoClinica) throws NegocioException {
 
         String sql = "SELECT id, fk_idMedico, fk_idClinica FROM clinicaMedico WHERE id = ?";
         PreparedStatement preparedStatement = null;
@@ -108,10 +108,55 @@ public class ClinicaMedicoDAO
 
         try {
             preparedStatement = ConexaoMySQL.getConnection().prepareStatement(sql);
+            preparedStatement.setLong(1, idMedicoClinica);
+
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()){
+                clinicaMedico.setId(resultSet.getLong("id"));
+                clinicaMedico.setFk_idMedico(resultSet.getLong("fk_idMedico"));
+                clinicaMedico.setFk_idClinica(resultSet.getLong("fk_idClinica"));
+            }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new NegocioException("Ocorreu algum erro na busca da relação entre clinica e medico selecionado");
+        } finally {
+            if (preparedStatement != null && resultSet != null){
+                try {
+                    preparedStatement.close();
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
-        return null;
+        return clinicaMedico;
+    }
+
+    public String alterarClinicaMedico(ClinicaMedicoEntity clinicaMedico) throws NegocioException {
+
+        String sql = "UPDATE clinicaMedico SET fk_idMedico = ?, fk_idClinica = ? WHERE id = ?";
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = ConexaoMySQL.getConnection().prepareStatement(sql);
+            preparedStatement.setLong(1, clinicaMedico.getFk_idMedico());
+            preparedStatement.setLong(2, clinicaMedico.getFk_idClinica());
+            preparedStatement.setLong(3, clinicaMedico.getId());
+
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new NegocioException("Ocorreu um erro na atualização da relação entre medico e clinica!");
+        } finally {
+            if (preparedStatement != null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return "A relação entre medico e clinica foi atualizada com sucesso";
     }
 }
