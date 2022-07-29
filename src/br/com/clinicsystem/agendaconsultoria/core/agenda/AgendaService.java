@@ -26,9 +26,9 @@ public class AgendaService {
         return agendaBO.buscarAgenda(idAgenda);
     }
 
-    public String editarAgenda(AgendaEntity agenda) throws NegocioException {
+    public String alterarAgenda(AgendaEntity agenda) throws NegocioException {
         AgendaBO agendaBO = new AgendaBO();
-        return agendaBO.editarAgenda(agenda);
+        return agendaBO.alterarAgenda(agenda);
 
     }
 

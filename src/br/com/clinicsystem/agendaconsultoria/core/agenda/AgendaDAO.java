@@ -130,7 +130,7 @@ public class AgendaDAO {
         return agendaEntity;
     }
 
-    public String editarAgenda(AgendaEntity agenda) throws NegocioException {
+    public String alterarAgenda(AgendaEntity agenda) throws NegocioException {
 
         String sql = "UPDATE agenda SET horario = ?, fk_idClinicaMedico = ?, fk_idPaciente = ? WHERE id = ?";
         PreparedStatement preparedStatement = null;
