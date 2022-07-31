@@ -7,7 +7,7 @@ import java.util.Objects;
 public class AgendaEntity {
 
     private Long id;
-    private Date horario;
+    private String horario;
     private Long fk_idClinicaMedico;
     private Long fk_idPaciente;
 
@@ -19,11 +19,11 @@ public class AgendaEntity {
         this.id = id;
     }
 
-    public Timestamp getHorario() {
-        return (Timestamp) horario;
+    public String getHorario() {
+        return horario;
     }
 
-    public void setHorario(Date horario) {
+    public void setHorario(String horario) {
         this.horario = horario;
     }
 

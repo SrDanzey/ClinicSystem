@@ -12,7 +12,7 @@ public class ClinicaMedicoDAO
 {
     public String salvarClinicaMedico(ClinicaMedicoEntity clinicaMedico) throws NegocioException {
 
-        String sql = "INSERT INTO clinicaMedico(fk_idMedico, fk_idClinica) VALUES (?,?)";
+        String sql = "INSERT INTO clinica_Medico(fk_idMedico, fk_idClinica) VALUES (?,?)";
         PreparedStatement preparedStatement = null;
 
         try {
@@ -39,7 +39,7 @@ public class ClinicaMedicoDAO
 
     public ArrayList<ClinicaMedicoEntity> listarClinicaMedico() throws NegocioException {
 
-        String sql = "SELECT id, fk_idMedico, fk_idClinica FROM clinicaMedico";
+        String sql = "SELECT id, fk_idMedico, fk_idClinica FROM clinica_Medico";
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         ArrayList<ClinicaMedicoEntity> clinicaMedicoEntities = new ArrayList<ClinicaMedicoEntity>();
@@ -77,7 +77,7 @@ public class ClinicaMedicoDAO
 
     public void deletarClinicaMedico(Long idClinicaMedico) throws NegocioException {
 
-        String sql = "DELETE FROM clinicaMedico WHERE id = ?";
+        String sql = "DELETE FROM clinica_Medico WHERE id = ?";
         PreparedStatement preparedStatement = null;
 
         try {
@@ -101,7 +101,7 @@ public class ClinicaMedicoDAO
 
     public ClinicaMedicoEntity buscarClinicaMedico(Long idMedicoClinica) throws NegocioException {
 
-        String sql = "SELECT id, fk_idMedico, fk_idClinica FROM clinicaMedico WHERE id = ?";
+        String sql = "SELECT id, fk_idMedico, fk_idClinica FROM clinica_Medico WHERE id = ?";
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         ClinicaMedicoEntity clinicaMedico = new ClinicaMedicoEntity();
@@ -135,7 +135,7 @@ public class ClinicaMedicoDAO
 
     public String alterarClinicaMedico(ClinicaMedicoEntity clinicaMedico) throws NegocioException {
 
-        String sql = "UPDATE clinicaMedico SET fk_idMedico = ?, fk_idClinica = ? WHERE id = ?";
+        String sql = "UPDATE clinica_Medico SET fk_idMedico = ?, fk_idClinica = ? WHERE id = ?";
         PreparedStatement preparedStatement = null;
 
         try {

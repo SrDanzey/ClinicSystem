@@ -4,16 +4,13 @@ import br.com.clinicsystem.agendaconsultoria.core.paciente.PacienteEntity;
 import br.com.clinicsystem.agendaconsultoria.core.paciente.PacienteService;
 import br.com.clinicsystem.agendaconsultoria.core.validacao.exception.NegocioException;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.Font;
-import java.awt.event.ActionListener;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class CadastroPaciente extends JFrame {
 
@@ -73,7 +70,12 @@ public class CadastroPaciente extends JFrame {
 
 				String mensagem = null;
 				try {
-					mensagem = pacienteService.salvarPaciente(pacienteEntity);
+					if (fieldId.getText().equals("")) {
+						mensagem = pacienteService.salvarPaciente(pacienteEntity);
+					} else{
+						pacienteEntity.setId(Long.parseLong(fieldId.getText()));
+						mensagem = pacienteService.alterarPaciente(pacienteEntity);
+					}
 				} catch (NegocioException ex) {
 					ex.printStackTrace();
 				}
@@ -81,6 +83,9 @@ public class CadastroPaciente extends JFrame {
 				limpaCampo();
 				JOptionPane.showMessageDialog(null, mensagem);
 
+				ListaPaciente listaPaciente = new ListaPaciente();
+				listaPaciente.setVisible(true);
+				dispose();
 			}
 		});
 
@@ -97,52 +102,77 @@ public class CadastroPaciente extends JFrame {
 
 		fieldSintoma = new JTextField();
 		fieldSintoma.setColumns(10);
+
+		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListaPaciente listaPaciente = new ListaPaciente();
+				listaPaciente.setVisible(true);
+				dispose();
+			}
+		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_contentPane.createSequentialGroup().addContainerGap()
-										.addComponent(lblNewLabel_1).addPreferredGap(ComponentPlacement.UNRELATED)
-										.addComponent(fieldId, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_contentPane.createSequentialGroup().addContainerGap()
-										.addComponent(lblNewLabel_2).addPreferredGap(ComponentPlacement.UNRELATED)
-										.addComponent(fieldNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_contentPane.createSequentialGroup().addContainerGap()
-										.addComponent(lblNewLabel_3).addPreferredGap(ComponentPlacement.UNRELATED)
-										.addComponent(fieldCPF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_contentPane.createSequentialGroup().addContainerGap()
-										.addComponent(lblNewLabel_4).addPreferredGap(ComponentPlacement.UNRELATED)
-										.addComponent(fieldSintoma, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_contentPane.createSequentialGroup().addContainerGap()
-										.addComponent(btnCadastrar))
-								.addGroup(gl_contentPane.createSequentialGroup().addGap(143).addComponent(lblNewLabel,
-										GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE)))
-						.addContainerGap(101, Short.MAX_VALUE)));
-		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane
-				.createSequentialGroup().addContainerGap()
-				.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addGroup(gl_contentPane
-						.createParallelGroup(Alignment.BASELINE).addComponent(lblNewLabel_1).addComponent(fieldId,
-								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addGap(18)
-				.addGroup(gl_contentPane
-						.createParallelGroup(Alignment.BASELINE).addComponent(lblNewLabel_2).addComponent(fieldNome,
-								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addGap(18)
-				.addGroup(gl_contentPane
-						.createParallelGroup(Alignment.BASELINE).addComponent(lblNewLabel_3).addComponent(fieldCPF,
-								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addGap(18)
-				.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE).addComponent(lblNewLabel_4)
-						.addComponent(fieldSintoma, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE))
-				.addPreferredGap(ComponentPlacement.RELATED, 39, Short.MAX_VALUE).addComponent(btnCadastrar)
-				.addGap(28)));
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblNewLabel_1)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(fieldId, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblNewLabel_2)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(fieldNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblNewLabel_3)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(fieldCPF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblNewLabel_4)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(fieldSintoma, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(btnCadastrar)
+							.addGap(18)
+							.addComponent(btnVoltar))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(143)
+							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(127, Short.MAX_VALUE))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel_1)
+						.addComponent(fieldId, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel_2)
+						.addComponent(fieldNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel_3)
+						.addComponent(fieldCPF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel_4)
+						.addComponent(fieldSintoma, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnCadastrar)
+						.addComponent(btnVoltar))
+					.addGap(28))
+		);
 		contentPane.setLayout(gl_contentPane);
 	}
 
@@ -151,5 +181,26 @@ public class CadastroPaciente extends JFrame {
 		fieldNome.setText("");
 		fieldCPF.setText("");
 		fieldSintoma.setText("");
+	}
+
+	public void carregarPacientePorID(Long idPaciente){
+
+		try {
+			PacienteEntity pacienteEncontrado = new PacienteService().buscarPorPaciente(idPaciente);
+
+			if (pacienteEncontrado == null){
+				JOptionPane.showMessageDialog(null,
+						"O paciente não foi localizado", "erro", JOptionPane.ERROR_MESSAGE);
+			} else{
+				fieldId.setText(""+pacienteEncontrado.getId());
+				fieldNome.setText(pacienteEncontrado.getNome());
+				fieldCPF.setText(pacienteEncontrado.getCpf());
+				fieldSintoma.setText(pacienteEncontrado.getSintoma());
+			}
+
+		} catch (NegocioException e) {
+			JOptionPane.showMessageDialog(null, e.getMensagemErro(), "erro", JOptionPane.ERROR_MESSAGE);
+		}
+
 	}
 }

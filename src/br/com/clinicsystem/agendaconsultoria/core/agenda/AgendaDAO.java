@@ -11,12 +11,12 @@ import java.util.ArrayList;
 public class AgendaDAO {
     public String salvarAgenda(AgendaEntity agenda) throws NegocioException {
 
-        String sql = "INSERT INTO agenda(horario, fk_idClinicaMedico, fk_idPaciente VALUES (?,?,?)";
+        String sql = "INSERT INTO agenda(horario, fk_idClinica_medico, fk_idPaciente) VALUES (?,?,?);";
         PreparedStatement preparedStatement = null;
 
         try {
             preparedStatement = ConexaoMySQL.getConnection().prepareStatement(sql);
-            preparedStatement.setTimestamp(1, agenda.getHorario());
+            preparedStatement.setString(1, agenda.getHorario());
             preparedStatement.setLong(2, agenda.getFk_idClinicaMedico());
             preparedStatement.setLong(3, agenda.getFk_idPaciente());
 
@@ -39,7 +39,7 @@ public class AgendaDAO {
 
     public ArrayList<AgendaEntity> listarAgenda() throws NegocioException {
 
-        String sql = "SELECT id, horario, fk_idClinicaMedico, fk_idPaciente FROM agenda";
+        String sql = "SELECT id, horario, fk_idClinica_medico, fk_idPaciente FROM agenda";
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         ArrayList<AgendaEntity> agendaEntities = new ArrayList<AgendaEntity>();
@@ -51,8 +51,8 @@ public class AgendaDAO {
             while (resultSet.next()){
                 AgendaEntity agendaEntity = new AgendaEntity();
                 agendaEntity.setId(resultSet.getLong("id"));
-                agendaEntity.setHorario(resultSet.getTimestamp("horario"));
-                agendaEntity.setFk_idClinicaMedico(resultSet.getLong("fk_idClinicaMedico"));
+                agendaEntity.setHorario(resultSet.getString("horario"));
+                agendaEntity.setFk_idClinicaMedico(resultSet.getLong("fk_idClinica_Medico"));
                 agendaEntity.setFk_idPaciente(resultSet.getLong("fk_idPaciente"));
 
                 agendaEntities.add(agendaEntity);
@@ -98,7 +98,7 @@ public class AgendaDAO {
 
     public AgendaEntity buscarAgenda(Long idAgenda) throws NegocioException {
 
-        String sql = "SELECT id, horario, fk_idClinicaMedico, fk_idPaciente FROM agenda WHERE id = ?";
+        String sql = "SELECT id, horario, fk_idClinica_Medico, fk_idPaciente FROM agenda WHERE id = ?";
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         AgendaEntity agendaEntity = new AgendaEntity();
@@ -110,8 +110,8 @@ public class AgendaDAO {
 
             if (resultSet.next()){
                 agendaEntity.setId(resultSet.getLong("id"));
-                agendaEntity.setHorario(resultSet.getTimestamp("horario"));
-                agendaEntity.setFk_idClinicaMedico(resultSet.getLong("fk_idClinicaMedico"));
+                agendaEntity.setHorario(resultSet.getString("horario"));
+                agendaEntity.setFk_idClinicaMedico(resultSet.getLong("fk_idClinica_Medico"));
                 agendaEntity.setFk_idPaciente(resultSet.getLong("fk_idPaciente"));
             }
         } catch (SQLException e) {
@@ -132,12 +132,12 @@ public class AgendaDAO {
 
     public String alterarAgenda(AgendaEntity agenda) throws NegocioException {
 
-        String sql = "UPDATE agenda SET horario = ?, fk_idClinicaMedico = ?, fk_idPaciente = ? WHERE id = ?";
+        String sql = "UPDATE agenda SET horario = ?, fk_idClinica_Medico = ?, fk_idPaciente = ? WHERE id = ?";
         PreparedStatement preparedStatement = null;
 
         try {
             preparedStatement = ConexaoMySQL.getConnection().prepareStatement(sql);
-            preparedStatement.setTimestamp(1, agenda.getHorario());
+            preparedStatement.setString(1, agenda.getHorario());
             preparedStatement.setLong(2, agenda.getFk_idClinicaMedico());
             preparedStatement.setLong(3, agenda.getFk_idPaciente());
             preparedStatement.setLong(4, agenda.getId());

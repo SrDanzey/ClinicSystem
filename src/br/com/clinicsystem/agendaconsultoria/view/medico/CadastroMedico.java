@@ -3,6 +3,7 @@ package br.com.clinicsystem.agendaconsultoria.view.medico;
 import br.com.clinicsystem.agendaconsultoria.core.medico.MedicoEntity;
 import br.com.clinicsystem.agendaconsultoria.core.medico.MedicoService;
 import br.com.clinicsystem.agendaconsultoria.core.validacao.exception.NegocioException;
+import br.com.clinicsystem.agendaconsultoria.view.paciente.ListaPaciente;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -20,6 +21,7 @@ public class CadastroMedico extends JFrame {
 	private JPanel contentPane;
 	private JTextField fieldNome;
 	private JTextField fieldID;
+	private JLabel title;
 
 	/**
 	 * Launch the application.
@@ -41,14 +43,14 @@ public class CadastroMedico extends JFrame {
 	 * Create the frame.
 	 */
 	public CadastroMedico() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		JLabel lblNewLabel = new JLabel("Cadastro de Medico");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		title = new JLabel("Cadastro de Medico");
+		title.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		JLabel lblNewLabel_1 = new JLabel("ID");
 		
@@ -73,13 +75,30 @@ public class CadastroMedico extends JFrame {
 				String mensagem = null;
 
 				try {
-					mensagem = medicoService.salvarMedico(medicoEntity);
+					if (fieldID == null) {
+						mensagem = medicoService.salvarMedico(medicoEntity);
+					} else{
+						medicoEntity.setId(Long.parseLong(fieldID.getText()));
+						mensagem = medicoService.alterarMedico(medicoEntity);
+					}
 				} catch (NegocioException ex) {
 					ex.printStackTrace();
 				}
-
+				limpaCampo();
 				JOptionPane.showMessageDialog(null, mensagem);
-
+				
+				ListaMedico listaMedico = new ListaMedico();
+				listaMedico.setVisible(true);
+				dispose();
+			}
+		});
+		
+		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListaMedico listaMedico = new ListaMedico();
+				listaMedico.setVisible(true);
+				dispose();
 			}
 		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
@@ -89,7 +108,7 @@ public class CadastroMedico extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(133)
-							.addComponent(lblNewLabel))
+							.addComponent(title))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(lblNewLabel_2)
@@ -102,14 +121,16 @@ public class CadastroMedico extends JFrame {
 							.addComponent(fieldID, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(btnCadastrar)))
+							.addComponent(btnCadastrar)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(btnVoltar, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(136, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(lblNewLabel)
+					.addComponent(title)
 					.addGap(45)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNewLabel_1)
@@ -119,10 +140,34 @@ public class CadastroMedico extends JFrame {
 						.addComponent(lblNewLabel_2)
 						.addComponent(fieldNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
-					.addComponent(btnCadastrar)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnCadastrar)
+						.addComponent(btnVoltar))
 					.addContainerGap())
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
 
+	public void limpaCampo(){
+		fieldID.setText("");
+		fieldNome.setText("");
+	}
+
+	public void carregarMedicoPorID(Long idMedico){
+		try {
+			MedicoEntity medicoEncontrado = new MedicoService().buscarMedico(idMedico);
+
+			if (medicoEncontrado == null){
+				JOptionPane.showMessageDialog(null,
+						"O medico nÃ£o foi localizado", "erro", JOptionPane.ERROR_MESSAGE);
+			}else {
+				fieldID.setText(""+medicoEncontrado.getId());
+				fieldNome.setText(medicoEncontrado.getNome());
+			}
+			
+			title.setText("Alteração de Medico");
+		} catch (NegocioException e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -52,21 +52,22 @@ public class ClinicaDAO {
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()){
-                ClinicaEntity clinicaEntity = new ClinicaEntity();
-                clinicaEntity.setId(resultSet.getLong("id"));
-                clinicaEntity.setNome(resultSet.getString("nome"));
-                clinicaEntity.setEndereco(resultSet.getString("enderoco"));
-                clinicaEntity.setTelefone(resultSet.getString("telefone"));
+                ClinicaEntity clinica = new ClinicaEntity();
+                clinica.setId(resultSet.getLong("id"));
+                clinica.setNome(resultSet.getString("nome"));
+                clinica.setEndereco(resultSet.getString("endereco"));
+                clinica.setTelefone(resultSet.getString("telefone"));
 
-                clinicaEntities.add(clinicaEntity);
+                clinicaEntities.add(clinica);
+
             }
         } catch (SQLException e) {
-            throw new NegocioException("Não foi possível fazer a listagem das clinicas!");
+            throw new NegocioException("Ocorreu algum problema na listagem de medicos!");
         } finally {
-            if (preparedStatement != null && resultSet != null){
+            if (preparedStatement != null){
                 try {
-                    resultSet.close();
                     preparedStatement.close();
+                    resultSet.close();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }

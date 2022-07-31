@@ -52,7 +52,8 @@ public class ListaPaciente extends JFrame {
 	 * Create the frame.
 	 */
 	public ListaPaciente() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Paciente");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 634, 418);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -72,6 +73,18 @@ public class ListaPaciente extends JFrame {
 		btnExcluir.setEnabled(false);
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				PacienteEntity pacienteSelecionado = pacienteEntities.get(table.getSelectedRow());
+				int confirm = JOptionPane.showConfirmDialog(null,
+						"Você realmente deseja excluir este paciente?"+ pacienteSelecionado.getNome());
+
+				if (confirm == 0){
+					try {
+						new PacienteService().deletarPaciente(pacienteSelecionado.getId());
+						popularTabela();
+					} catch (NegocioException ex) {
+						JOptionPane.showMessageDialog(null,ex.getMensagemErro());
+					}
+				}
 			}
 		});
 
@@ -79,6 +92,11 @@ public class ListaPaciente extends JFrame {
 		btnEditar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				PacienteEntity pacienteSelecionado = pacienteEntities.get(table.getSelectedRow());
+				CadastroPaciente cadastroPaciente = new CadastroPaciente();
+				cadastroPaciente.carregarPacientePorID(pacienteSelecionado.getId());
+				cadastroPaciente.setVisible(true);
+				dispose();
 			}
 		});
 		btnEditar.setEnabled(false);
@@ -86,28 +104,49 @@ public class ListaPaciente extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
+		
+		JButton btnAdicionar = new JButton("ADICIONAR");
+		btnAdicionar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CadastroPaciente cadastroPaciente = new CadastroPaciente();
+				cadastroPaciente.setVisible(true);
+				dispose();
+			}
+		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane
-				.createSequentialGroup().addGap(22)
-				.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(22)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
 						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 567, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_contentPane.createSequentialGroup()
-								.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-										.addComponent(lblNewLabel).addComponent(btnEditar, GroupLayout.PREFERRED_SIZE,
-												103, GroupLayout.PREFERRED_SIZE))
-								.addGap(18)
-								.addComponent(btnExcluir, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)))
-				.addContainerGap(19, Short.MAX_VALUE)));
-		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup().addComponent(lblNewLabel)
-						.addPreferredGap(ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnExcluir, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
-						.addGap(18)
-						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 218, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap()));
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(btnAdicionar, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED, 226, Short.MAX_VALUE)
+									.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED, 0, Short.MAX_VALUE)
+									.addComponent(lblNewLabel)))
+							.addGap(18)
+							.addComponent(btnExcluir, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)))
+					.addContainerGap(19, Short.MAX_VALUE))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(lblNewLabel)
+					.addPreferredGap(ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnExcluir, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnAdicionar, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 218, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
 
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
