@@ -1,23 +1,16 @@
 package br.com.clinicsystem.agendaconsultoria.view.clinicaMedico;
 
-import br.com.clinicsystem.agendaconsultoria.core.clinica.ClinicaEntity;
-import br.com.clinicsystem.agendaconsultoria.core.clinicaMedico.ClinicaMedicoDAO;
-import br.com.clinicsystem.agendaconsultoria.core.clinicaMedico.ClinicaMedicoEntity;
-import br.com.clinicsystem.agendaconsultoria.core.clinicaMedico.ClinicaMedicoService;
-import br.com.clinicsystem.agendaconsultoria.core.paciente.PacienteEntity;
+import br.com.clinicsystem.agendaconsultoria.core.entity.ClinicaMedicoEntity;
+import br.com.clinicsystem.agendaconsultoria.core.service.ClinicaMedicoService;
 import br.com.clinicsystem.agendaconsultoria.core.validacao.exception.NegocioException;
-import br.com.clinicsystem.agendaconsultoria.view.medico.ListaMedico;
-
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout.Alignment;
-import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.event.ActionListener;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class CadastroClinicaMedico extends JFrame {
 
@@ -53,7 +46,7 @@ public class CadastroClinicaMedico extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		title = new JLabel("Cadastrando rela\u00E7\u00E3o entre Clinica e medico");
+		title = new JLabel("Relacao entre Clinica e medico");
 		title.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		JLabel lblNewLabel_1 = new JLabel("ID");
@@ -73,7 +66,7 @@ public class CadastroClinicaMedico extends JFrame {
 		fieldID.setEditable(false);
 		fieldID.setColumns(10);
 		
-		JButton btnCadastrar = new JButton("Cadastrar");
+		JButton btnCadastrar = new JButton("SALVAR");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -190,7 +183,7 @@ public class CadastroClinicaMedico extends JFrame {
 				fieldFK_IDclinica.setText(""+clinicaMedico.getFk_idClinica());
 				fieldFK_IDmedico.setText(""+clinicaMedico.getFk_idMedico());
 			}
-			title.setText("Alteranção relação de Clinica e Medico");
+			title.setText("Alteranï¿½ï¿½o relaï¿½ï¿½o de Clinica e Medico");
 		} catch (NegocioException e) {
 			JOptionPane.showMessageDialog(null, e.getMensagemErro(), "erro", JOptionPane.ERROR_MESSAGE);
 		}

@@ -1,7 +1,7 @@
 package br.com.clinicsystem.agendaconsultoria.view.paciente;
 
-import br.com.clinicsystem.agendaconsultoria.core.paciente.PacienteEntity;
-import br.com.clinicsystem.agendaconsultoria.core.paciente.PacienteService;
+import br.com.clinicsystem.agendaconsultoria.core.entity.PacienteEntity;
+import br.com.clinicsystem.agendaconsultoria.core.service.PacienteService;
 import br.com.clinicsystem.agendaconsultoria.core.validacao.exception.NegocioException;
 
 import javax.swing.*;
@@ -40,13 +40,13 @@ public class CadastroPaciente extends JFrame {
 	 * Create the frame.
 	 */
 	public CadastroPaciente() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 476, 322);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
-		JLabel lblNewLabel = new JLabel("Cadastro de Paciente");
+		JLabel lblNewLabel = new JLabel("Paciente");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		JLabel lblNewLabel_1 = new JLabel("ID");
@@ -57,7 +57,7 @@ public class CadastroPaciente extends JFrame {
 
 		JLabel lblNewLabel_4 = new JLabel("Sintoma");
 
-		JButton btnCadastrar = new JButton("Cadastrar");
+		JButton btnCadastrar = new JButton("SALVAR");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 

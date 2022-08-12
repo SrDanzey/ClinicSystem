@@ -1,20 +1,16 @@
 package br.com.clinicsystem.agendaconsultoria.view.medico;
 
-import br.com.clinicsystem.agendaconsultoria.core.medico.MedicoEntity;
-import br.com.clinicsystem.agendaconsultoria.core.medico.MedicoService;
+import br.com.clinicsystem.agendaconsultoria.core.entity.MedicoEntity;
+import br.com.clinicsystem.agendaconsultoria.core.service.MedicoService;
 import br.com.clinicsystem.agendaconsultoria.core.validacao.exception.NegocioException;
-import br.com.clinicsystem.agendaconsultoria.view.paciente.ListaPaciente;
-
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout.Alignment;
-import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.event.ActionListener;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class CadastroMedico extends JFrame {
 
@@ -49,7 +45,7 @@ public class CadastroMedico extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		title = new JLabel("Cadastro de Medico");
+		title = new JLabel("Medico");
 		title.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		JLabel lblNewLabel_1 = new JLabel("ID");
@@ -64,7 +60,7 @@ public class CadastroMedico extends JFrame {
 		fieldID.setEditable(false);
 		fieldID.setColumns(10);
 		
-		JButton btnCadastrar = new JButton("Cadastrar");
+		JButton btnCadastrar = new JButton("SALVAR");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -75,7 +71,7 @@ public class CadastroMedico extends JFrame {
 				String mensagem = null;
 
 				try {
-					if (fieldID == null) {
+					if (fieldID.getText().equals("")) {
 						mensagem = medicoService.salvarMedico(medicoEntity);
 					} else{
 						medicoEntity.setId(Long.parseLong(fieldID.getText()));
@@ -165,7 +161,7 @@ public class CadastroMedico extends JFrame {
 				fieldNome.setText(medicoEncontrado.getNome());
 			}
 			
-			title.setText("Alteração de Medico");
+			title.setText("Alteraï¿½ï¿½o de Medico");
 		} catch (NegocioException e) {
 			e.printStackTrace();
 		}

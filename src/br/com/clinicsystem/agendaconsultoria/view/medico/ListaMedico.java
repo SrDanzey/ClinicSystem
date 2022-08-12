@@ -1,11 +1,9 @@
 package br.com.clinicsystem.agendaconsultoria.view.medico;
 
-import br.com.clinicsystem.agendaconsultoria.core.medico.MedicoEntity;
-import br.com.clinicsystem.agendaconsultoria.core.medico.MedicoService;
+import br.com.clinicsystem.agendaconsultoria.core.entity.MedicoEntity;
+import br.com.clinicsystem.agendaconsultoria.core.service.MedicoService;
 import br.com.clinicsystem.agendaconsultoria.core.validacao.exception.NegocioException;
-import br.com.clinicsystem.agendaconsultoria.view.paciente.CadastroPaciente;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.*;

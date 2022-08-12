@@ -1,22 +1,16 @@
 package br.com.clinicsystem.agendaconsultoria.view.clinica;
 
-import br.com.clinicsystem.agendaconsultoria.core.clinica.ClinicaEntity;
-import br.com.clinicsystem.agendaconsultoria.core.clinica.ClinicaService;
+import br.com.clinicsystem.agendaconsultoria.core.entity.ClinicaEntity;
+import br.com.clinicsystem.agendaconsultoria.core.service.ClinicaService;
 import br.com.clinicsystem.agendaconsultoria.core.validacao.exception.NegocioException;
-import br.com.clinicsystem.agendaconsultoria.view.clinicaMedico.ListaClinicaMedico;
-
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout.Alignment;
-import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionListener;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
+import java.awt.event.ActionListener;
 
 public class CadastroClinica extends JFrame {
 
@@ -53,18 +47,18 @@ public class CadastroClinica extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		title = new JLabel("Cadastrar Clinica");
+		title = new JLabel("Clinica");
 		title.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		JLabel lblNewLabel_1 = new JLabel("ID");
 		
 		JLabel lblNewLabel_2 = new JLabel("Nome");
 		
-		JLabel lblNewLabel_3 = new JLabel("Endere\u00E7o");
+		JLabel lblNewLabel_3 = new JLabel("Endereco");
 		
 		JLabel lblNewLabel_4 = new JLabel("Telefone");
 		
-		JButton btnCadastrar = new JButton("Cadastrar");
+		JButton btnCadastrar = new JButton("SALVAR");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -207,7 +201,7 @@ public class CadastroClinica extends JFrame {
 			}
 			
 			
-			title.setText("Alteração de Clinica");
+			title.setText("Alteraï¿½ï¿½o de Clinica");
 		} catch (NegocioException e) {
 			JOptionPane.showMessageDialog(null, e.getMensagemErro(), "erro", JOptionPane.ERROR_MESSAGE);
 		}

@@ -1,13 +1,9 @@
 package br.com.clinicsystem.agendaconsultoria.view.clinicaMedico;
 
-import br.com.clinicsystem.agendaconsultoria.core.clinicaMedico.ClinicaMedicoDAO;
-import br.com.clinicsystem.agendaconsultoria.core.clinicaMedico.ClinicaMedicoEntity;
-import br.com.clinicsystem.agendaconsultoria.core.clinicaMedico.ClinicaMedicoService;
-import br.com.clinicsystem.agendaconsultoria.core.paciente.PacienteService;
+import br.com.clinicsystem.agendaconsultoria.core.entity.ClinicaMedicoEntity;
+import br.com.clinicsystem.agendaconsultoria.core.service.ClinicaMedicoService;
 import br.com.clinicsystem.agendaconsultoria.core.validacao.exception.NegocioException;
-import br.com.clinicsystem.agendaconsultoria.view.medico.CadastroMedico;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.*;
@@ -18,7 +14,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

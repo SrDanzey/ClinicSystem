@@ -1,27 +1,20 @@
 package br.com.clinicsystem.agendaconsultoria.view.agenda;
 
-import br.com.clinicsystem.agendaconsultoria.core.agenda.AgendaEntity;
-import br.com.clinicsystem.agendaconsultoria.core.agenda.AgendaService;
-import br.com.clinicsystem.agendaconsultoria.core.paciente.PacienteEntity;
-import br.com.clinicsystem.agendaconsultoria.core.paciente.PacienteService;
+import br.com.clinicsystem.agendaconsultoria.core.entity.AgendaEntity;
+import br.com.clinicsystem.agendaconsultoria.core.service.AgendaService;
 import br.com.clinicsystem.agendaconsultoria.core.validacao.exception.NegocioException;
-import br.com.clinicsystem.agendaconsultoria.view.clinica.CadastroClinica;
-
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class ListaAgenda extends JFrame {
 
